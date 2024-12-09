@@ -1,0 +1,1 @@
+ALTER TABLE "justblue_post_media" ADD COLUMN "file_type" varchar(255) NOT NULL;

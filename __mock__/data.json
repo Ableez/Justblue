@@ -1,0 +1,107 @@
+{
+  "users": [
+    {
+      "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      "username": "johndoe",
+      "email": "john.doe@example.com",
+      "phoneNumber": "555-123-4567",
+      "displayName": "John Doe",
+      "bio": "Software engineer passionate about building amazing things.",
+      "profilePictureUrl": "https://example.com/profile.jpg",
+      "location": "New York",
+      "website": "https://johndoe.com",
+      "accountType": "public",
+      "verified": true,
+      "createdAt": "2024-03-08T12:00:00Z",
+      "lastLogin": "2024-03-08T13:00:00Z"
+    },
+    {
+      "id": "f7e6d5c4-b3a2-1098-7654-3210fedcba98",
+      "username": "janedoe",
+      "email": "jane.doe@example.com",
+      "phoneNumber": "555-987-6543",
+      "displayName": "Jane Doe",
+      "bio": "Enthusiastic about traveling and photography.",
+      "profilePictureUrl": "https://example.com/jane.jpg",
+      "location": "London",
+      "website": "https://janedoe.com",
+      "accountType": "private",
+      "verified": false,
+      "createdAt": "2024-03-07T10:00:00Z",
+      "lastLogin": "2024-03-08T14:00:00Z"
+    }
+  ],
+  "userAuthentication": [
+    {
+      "userId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      "passwordHash": "$2b$10$a1B2c3D4e5f678901234567890abcdefgh",
+      "salt": "salt123",
+      "twoFactorEnabled": false
+    },
+    {
+      "userId": "f7e6d5c4-b3a2-1098-7654-3210fedcba98",
+      "passwordHash": "$2b$10$f7E6d5C4b3a2109876543210fedcba98",
+      "salt": "salt456",
+      "twoFactorEnabled": true
+    }
+  ],
+  "posts": [
+    {
+      "id": "p1q2r3s4-t5u6-v7w8-x9y0-zabcdefghijkl",
+      "userId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      "content": "Just enjoyed a great coffee!",
+      "postType": "text",
+      "visibility": "public",
+      "locationLatitude": 40.7128,
+      "locationLongitude": -74.0060,
+      "locationName": "New York City",
+      "createdAt": "2024-03-08T14:30:00Z",
+      "updatedAt": "2024-03-08T14:30:00Z"
+    },
+    {
+      "id": "m9l8k7j6-i5h4-g3f2-e1d0-cba9876543210",
+      "userId": "f7e6d5c4-b3a2-1098-7654-3210fedcba98",
+      "content": "Amazing view from the Eiffel Tower!",
+      "postType": "image",
+      "visibility": "followers",
+      "locationLatitude": 48.8566,
+      "locationLongitude": 2.2950,
+      "locationName": "Paris",
+      "createdAt": "2024-03-08T15:00:00Z",
+      "updatedAt": "2024-03-08T15:00:00Z"
+    }
+  ],
+  "postMedia": [
+    {
+      "id": "media1",
+      "postId": "m9l8k7j6-i5h4-g3f2-e1d0-cba9876543210",
+      "mediaUrl": "https://example.com/eiffeltower.jpg",
+      "mediaType": "image",
+      "mediaOrder": 0
+    }
+  ],
+  "likes":[
+    {
+      "userId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      "postId": "m9l8k7j6-i5h4-g3f2-e1d0-cba9876543210",
+      "createdAt": "2024-03-08T15:05:00Z"
+    }
+  ],
+  "comments":[
+    {
+      "id": "comment1",
+      "postId": "m9l8k7j6-i5h4-g3f2-e1d0-cba9876543210",
+      "userId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      "parentCommentId": null,
+      "content": "Wow, beautiful!",
+      "createdAt": "2024-03-08T15:10:00Z"
+    }
+  ],
+  "follows":[
+    {
+      "followerId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      "followedId": "f7e6d5c4-b3a2-1098-7654-3210fedcba98",
+      "createdAt": "2024-03-08T15:15:00Z"
+    }
+  ]
+}
