@@ -48,7 +48,7 @@ const DesktopSidebar = () => {
   const currentPath = pathname === "/" ? "/" : `/${pathname?.split("/")[1]}`;
   const theme = useTheme();
 
-  const { open, setOpen } = useContext(ModalContext);
+  const { setOpen } = useContext(ModalContext);
 
   return (
     <div className="fixed hidden h-[100dvh] flex-col justify-between p-4 py-4 dark:border-neutral-900 md:flex">

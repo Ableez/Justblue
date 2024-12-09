@@ -1,11 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { api } from "@/trpc/react";
 import { Heart, MessageCircle, Send, Bookmark } from "lucide-react";
 import {
   type PostWithRelationsAndComments,
   type LikeSelect,
-  CommentSelect,
 } from "@/server/db/schema";
 import { useUser } from "@clerk/nextjs";
 import {
@@ -14,7 +13,7 @@ import {
 } from "@/store/feed-store";
 import { motion } from "framer-motion";
 import { LikeConfetti } from "@/components/ui/confetti";
-
+import ModalContext from "@/lib/context/modal";
 type Props = {
   post: PostWithRelationsAndCommentsAndOptimistic;
 };
@@ -30,6 +29,8 @@ export const PostActions = ({ post: initPost }: Props) => {
 
   const { mutate: toggleLike } = api.post.toggleLike.useMutation();
   const { mutate: toggleFavorite } = api.post.toggleFavorite.useMutation();
+
+  const { setOpen } = useContext(ModalContext);
 
   const handleLike = async () => {
     if (!user?.id) return;
@@ -94,36 +95,6 @@ export const PostActions = ({ post: initPost }: Props) => {
     );
   };
 
-  const handleComment = async () => {
-    if (!user?.id) return;
-    // TODO: Implement commenting
-
-    await optimisticUpdate(
-      post.id,
-      {
-        comments: [
-          ...(post.comments ?? []),
-          {
-            userId: user.id,
-            createdAt: new Date(),
-            content: "test",
-            postId: post.id,
-          } as CommentSelect,
-        ],
-        _hasCommented: true,
-        _count: {
-          likes: post._count?.likes ?? 0,
-          comments: (post._count?.comments ?? 0) + 1,
-        },
-      },
-      () =>
-        new Promise<void>((resolve) => {
-          // TODO: Implement commenting
-          resolve();
-        }),
-    );
-  };
-
   if (!isLoaded) return null;
 
   const AuthenticatedActionButton = ({
@@ -181,7 +152,13 @@ export const PostActions = ({ post: initPost }: Props) => {
             </motion.div>
             <LikeConfetti isActive={showConfetti} />
           </AuthenticatedActionButton>
-          <AuthenticatedActionButton tooltip="Comment" icon={MessageCircle}>
+          <AuthenticatedActionButton
+            onClick={() => {
+              setOpen(true, "comment", post.id);
+            }}
+            tooltip="Comment"
+            icon={MessageCircle}
+          >
             <MessageCircle size={20} />
           </AuthenticatedActionButton>
           <AuthenticatedActionButton tooltip="Share" icon={Send}>

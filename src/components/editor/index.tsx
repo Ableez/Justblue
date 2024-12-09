@@ -21,9 +21,14 @@ import { editorConfig } from "@/lib/editor-config";
 interface EditorProps {
   onChange?: (content: string) => void;
   editorState: string;
+  placeholder?: string;
 }
 
-export default function LexicalEditor({ onChange, editorState }: EditorProps) {
+export default function LexicalEditor({
+  onChange,
+  editorState,
+  placeholder,
+}: EditorProps) {
   const handleChange = useCallback(
     (editorState: EditorState) => {
       editorState.read(() => {
@@ -45,7 +50,7 @@ export default function LexicalEditor({ onChange, editorState }: EditorProps) {
         contentEditable={
           <ContentEditable className="text-sm focus:outline-none" />
         }
-        placeholder={<Placeholder />}
+        placeholder={<Placeholder placeholder={placeholder} />}
         ErrorBoundary={LexicalErrorBoundary}
       />
       <HistoryPlugin />
@@ -59,10 +64,10 @@ export default function LexicalEditor({ onChange, editorState }: EditorProps) {
   );
 }
 
-function Placeholder() {
+function Placeholder({ placeholder }: { placeholder?: string }) {
   return (
     <div className="absolute left-[75px] top-[40px] text-[14px] text-neutral-500">
-      What&apos;s new?
+      {placeholder ?? "What&apos;s new?"}
     </div>
   );
 }

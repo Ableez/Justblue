@@ -19,6 +19,9 @@ interface FeedStore {
   setPosts: (posts: PostWithRelationsAndCommentsAndOptimistic[]) => void;
   addPost: (post: PostWithRelationsAndCommentsAndOptimistic) => void;
   removePost: (postId: string) => void;
+  getPost: (
+    postId: string,
+  ) => PostWithRelationsAndCommentsAndOptimistic | undefined;
   updatePost: (
     postId: string,
     updates: Partial<PostWithRelationsAndCommentsAndOptimistic>,
@@ -46,6 +49,7 @@ export const useFeedStore = create<FeedStore>()((set, get) => ({
     set((state) => ({
       posts: state.posts.filter((post) => post.id !== postId),
     })),
+  getPost: (postId) => get().posts.find((post) => post.id === postId),
   updatePost: (postId, updates) =>
     set((state) => ({
       posts: state.posts.map((post) =>

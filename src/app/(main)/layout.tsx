@@ -1,18 +1,13 @@
 "use client";
-import CreateModal from "@/components/create-post-modal";
 import DesktopSidebar from "@/components/desktop/sidebar/desktop-sidebar";
 import Header from "@/components/header";
 import MobileTab from "@/components/mobile/mobile-tab";
 import ModalContext from "@/lib/context/modal";
-import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import React, { useContext } from "react";
-import { editorConfig } from "../../lib/editor-config";
+import PostModal from "@/components/create-post-modal";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { open, setOpen } = useContext(ModalContext);
-  const onError = (error: Error) => {
-    console.error(error);
-  };
+  const { open, setOpen, action, postId } = useContext(ModalContext);
 
   return (
     <div className="flex">
@@ -22,7 +17,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <Header />
         {children}
         <MobileTab />
-        <CreateModal open={open} onOpenChange={setOpen} />
+        <PostModal
+          open={open}
+          closeModal={() => setOpen(false)}
+          action={action ?? "create"}
+          postId={postId}
+        />
       </main>
     </div>
   );

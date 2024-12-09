@@ -154,7 +154,7 @@ export const postRouter = createTRPCRouter({
       return { success: true };
     }),
 
-  comment: protectedProcedure
+  createComment: protectedProcedure
     .input(
       z.object({
         postId: z.string().uuid(),
