@@ -12,6 +12,7 @@ import {
   favorites,
   type PostWithRelationsAndComments,
   type PostMediaSelect,
+  commentReplies,
 } from "@/server/db/schema";
 import { and, eq } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
@@ -174,6 +175,47 @@ export const postRouter = createTRPCRouter({
         })
         .returning();
       return comment[0];
+    }),
+
+  createReply: protectedProcedure
+    .input(
+      z.object({
+        content: z.string(),
+        commentId: z.string().uuid(),
+        postId: z.string().uuid(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.userId) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+
+      const cmt = await ctx.db //create reply as a comment
+        .insert(comments)
+        .values({
+          userId: ctx.userId,
+          content: input.content,
+          postId: input.postId,
+          isReply: true,
+        })
+        .returning();
+
+      if (!cmt[0]) {
+        console.error("Failed to create reply");
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+
+      const reply = await ctx.db
+        .insert(commentReplies)
+        .values({
+          commentId: input.commentId, // original comment being replied to
+          userId: ctx.userId,
+          content: input.content,
+          replyId: cmt[0]?.id, // replyId: id of the reply created as a comment
+        })
+        .returning();
+
+      return reply[0];
     }),
 
   toggleFavorite: protectedProcedure

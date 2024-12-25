@@ -149,7 +149,10 @@ const ThreadItem = ({
             <Carousel setApi={setApi} className="mt-2 w-full">
               <CarouselContent>
                 {post.media.map((file, mediaIndex) => (
-                  <CarouselItem key={mediaIndex} className="relative w-16">
+                  <CarouselItem
+                    key={mediaIndex}
+                    className="relative border-white md:basis-[65%]"
+                  >
                     <div>
                       <Image
                         src={URL.createObjectURL(file)}

@@ -6,7 +6,6 @@ import {
 } from "drizzle-orm";
 import {
   boolean,
-  decimal,
   index,
   jsonb,
   integer,
@@ -146,6 +145,7 @@ export const comments = createTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
     content: text("content").notNull(),
+    isReply: boolean("is_reply").notNull().default(false),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -161,13 +161,13 @@ export const commentReplies = createTable(
   "comment_replies",
   {
     id: uuid("id").primaryKey().defaultRandom(),
-    commentId: uuid("comment_id")
+    commentId: uuid("comment_id") //comment being commented on
       .notNull()
       .references(() => comments.id, {
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    replyId: uuid("reply_id")
+    replyId: uuid("reply_id") //reply made on commentId saved as a comment itself
       .notNull()
       .references(() => comments.id, {
         onDelete: "cascade",
@@ -413,7 +413,7 @@ export type NewComment = InferInsertModel<typeof comments>;
 export type CommentWithRelations = CommentSelect & {
   user?: UserSelect;
   post?: PostSelect;
-  replies?: CommentReplySelect[];
+  replies?: CommentReplyWithRelations[];
   parentComments?: CommentReplySelect[];
   likes?: LikeSelect[];
 };

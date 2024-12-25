@@ -17,8 +17,9 @@ async function Post({ params }: Readonly<Props>) {
   void api.post.getById.prefetch(postId);
   void api.comment.byPostId.prefetch(postId);
 
+
   return (
-    <div className="relative mx-auto flex w-full max-w-[500px] animate-slide-in flex-col gap-4 p-4 pb-16">
+    <div className="relative mx-auto flex w-full animate-slide-in flex-col gap-4 p-4 pb-32">
       <PostHeader post={post} />
       <PostContent post={post} />
       <PostActions post={post} />

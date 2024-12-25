@@ -1,0 +1,1 @@
+ALTER TABLE "justblue_comments" ADD COLUMN "is_reply" boolean DEFAULT false NOT NULL;

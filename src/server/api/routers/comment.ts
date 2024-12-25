@@ -13,6 +13,11 @@ export const commentRouter = createTRPCRouter({
           where: eq(comments.postId, input),
           with: {
             user: true,
+            replies: {
+              with: {
+                user: true,
+              },
+            },
           },
           orderBy: (comments, { desc }) => [desc(comments.createdAt)],
         });

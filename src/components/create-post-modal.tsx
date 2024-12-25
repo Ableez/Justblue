@@ -21,7 +21,7 @@ type Props = {
 const PostModal = ({ open, closeModal, action, postId }: Props) => {
   return (
     <Dialog open={open} onOpenChange={closeModal}>
-      <DialogContent className="bg-black p-2 text-white sm:max-w-[425px]">
+      <DialogContent className="bg-black p-2 text-white sm:max-w-lg w-full">
         <div className="relative flex place-items-center items-center justify-between border-b border-neutral-800">
           <Button variant="link" onClick={closeModal}>
             Cancel

@@ -13,7 +13,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex">
       <DesktopSidebar />
 
-      <main className="mx-auto pb-16 md:pb-0">
+      <main className="mx-auto pb-16 md:pb-0 max-w-screen-sm w-full">
         <Header />
         {children}
         <MobileTab />

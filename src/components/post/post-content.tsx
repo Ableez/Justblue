@@ -30,10 +30,8 @@ export const PostContent = ({ post }: Props) => {
     });
   }, [api]);
 
-  console.log("MEDIA", post);
-
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 w-full">
       {post.content && (
         <p className="whitespace-pre-wrap break-words text-sm">
           {post.content}
@@ -52,7 +50,7 @@ export const PostContent = ({ post }: Props) => {
                         src={media.mediaUrl ?? "/placeholder.webp"}
                         alt={`Media ${index + 1}`}
                         fill
-                        className="rounded-md object-cover"
+                        className="rounded-md object-fit"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         priority={index === 0}
                       />
@@ -75,7 +73,7 @@ export const PostContent = ({ post }: Props) => {
                   src={post.media[0]?.mediaUrl}
                   alt="Media"
                   fill
-                  className="rounded-md object-cover"
+                  className="rounded-md object-contain"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority
                 />
