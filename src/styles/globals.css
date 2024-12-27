@@ -115,3 +115,8 @@
   display: inline-block;
   pointer-events: none;
 }
+
+.mention {
+  color: blue;
+  font-weight: bold;
+}

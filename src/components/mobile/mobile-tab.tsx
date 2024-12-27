@@ -1,5 +1,6 @@
 "use client";
 
+import ModalContext from "@/lib/context/modal";
 import { useUser } from "@clerk/nextjs";
 import {
   IconMessageCircle2,
@@ -8,7 +9,7 @@ import {
 import { Plus, Search, UserIcon } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { GoHomeFill, GoHome } from "react-icons/go";
 
 const tabItems = [
@@ -28,6 +29,8 @@ const MobileTabs = () => {
   const { user } = useUser();
   const router = useRouter();
 
+  const { setOpen } = useContext(ModalContext);
+
   return (
     <div className="fixed bottom-0 left-0 right-0 flex justify-around gap-2 border-t bg-white p-1 dark:border-neutral-900 dark:bg-black md:hidden">
       {tabItems.map((item) => (
@@ -42,7 +45,7 @@ const MobileTabs = () => {
             } else if (item.label === "Search") {
               router.push("/search");
             } else if (item.label === "Create") {
-              router.push("/create");
+              setOpen(true);
             }
           }}
           className={`grid w-full place-items-center rounded-md py-3 duration-300 ease-in hover:bg-neutral-200 dark:hover:bg-neutral-950 ${

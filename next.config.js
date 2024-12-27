@@ -24,6 +24,10 @@ const config = {
         protocol: "https",
         hostname: "img.clerk.com",
       },
+      {
+        protocol: "https",
+        hostname: "github.com",
+      },
     ],
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",

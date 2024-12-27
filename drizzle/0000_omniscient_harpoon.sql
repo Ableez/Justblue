@@ -11,6 +11,12 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ CREATE TYPE "public"."post_type" AS ENUM('text', 'carousel');
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  CREATE TYPE "public"."post_visibility" AS ENUM('public', 'followers', 'close_friends');
 EXCEPTION
  WHEN duplicate_object THEN null;
@@ -30,6 +36,7 @@ CREATE TABLE IF NOT EXISTS "justblue_comments" (
 	"post_id" uuid NOT NULL,
 	"user_id" varchar NOT NULL,
 	"content" text NOT NULL,
+	"is_reply" boolean DEFAULT false NOT NULL,
 	"created_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 --> statement-breakpoint
@@ -59,7 +66,11 @@ CREATE TABLE IF NOT EXISTS "justblue_post_media" (
 	"post_id" uuid NOT NULL,
 	"media_url" varchar(255) NOT NULL,
 	"media_type" "media_type" NOT NULL,
-	"media_order" integer DEFAULT 0
+	"media_order" integer DEFAULT 0,
+	"media_size" integer DEFAULT 0 NOT NULL,
+	"file_hash" varchar NOT NULL,
+	"file_key" varchar NOT NULL,
+	"file_type" varchar(255) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "justblue_posts" (
@@ -67,9 +78,7 @@ CREATE TABLE IF NOT EXISTS "justblue_posts" (
 	"user_id" varchar NOT NULL,
 	"content" text,
 	"visibility" "post_visibility" DEFAULT 'public',
-	"location_latitude" numeric(10, 8),
-	"location_longitude" numeric(11, 8),
-	"location_name" varchar(100),
+	"post_type" "post_type" DEFAULT 'text',
 	"created_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	"updated_at" timestamp with time zone
 );
